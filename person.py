@@ -13,6 +13,19 @@ class Person:
         return person_data
 
     @staticmethod
+    def load_by_id(id):
+        """A Function that loads a person by id"""
+        person_data = Person.load_person_data()
+        for eintrag in person_data:
+            if eintrag["id"] == id:
+                return Person(eintrag)
+            else:
+                print("Person existiert nicht")
+        else:
+            return None
+
+
+    @staticmethod
     def get_person_list(person_data):
         """A Function that takes the persons-dictionary and returns a list auf all person names"""
         list_of_names = []
@@ -56,6 +69,9 @@ class Person:
         '''Max HR anhand des Alters berechnen'''    
         max_hr_bpm =  223 - 0.9 * age
         return int(max_hr_bpm)
+    
+    @staticmethod
+
 
 
     def __init__(self, person_dict) -> None:
