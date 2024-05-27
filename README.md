@@ -14,10 +14,7 @@
     - Führen sie folgende Befehl aus: `git clone <Link des Repositorys>` 
 - (optional) aktivieren Sie Ihr Virtual Environment
 - führen Sie den Befehl `streamlit run main.py` aus
-- das Programm wird im Browser geöffnet
-![alt text](screenshot.png)
-- das Programm zeigt nun die EKG-Daten und Power-Daten an
-- Durch eingabe der Maximalen Herzfrequenz werden die Zonen visuell angepasst
+- ...
 
 
 ## Befehle um Virtual Environment zu erstellen
