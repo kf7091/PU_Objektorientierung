@@ -1,5 +1,6 @@
 ## Requirements
 - pandas
+- numpy
 - plottly
 - streamlit
 
