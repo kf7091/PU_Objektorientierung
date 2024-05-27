@@ -1,4 +1,6 @@
 import json
+import datetime
+import numpy as np
 
 
 class Person:
@@ -41,17 +43,35 @@ class Person:
                 return eintrag
         else:
             return {}
-        
+
+    @staticmethod
+    def calc_age(date_of_birth):
+            '''Alter berechnen mit dem Geburtsdatum als Eingabe'''
+            today = datetime.date.today()
+            age = today.year - date_of_birth
+            return age
+
+    @staticmethod
+    def calc_max_hr(age : int) -> int:
+        '''Max HR anhand des Alters berechnen'''    
+        max_hr_bpm =  223 - 0.9 * age
+        return int(max_hr_bpm)
+
+
     def __init__(self, person_dict) -> None:
         self.date_of_birth = person_dict["date_of_birth"]
         self.firstname = person_dict["firstname"]
         self.lastname = person_dict["lastname"]
         self.picture_path = person_dict["picture_path"]
         self.id = person_dict["id"]
+        self.age = self.calc_age(self.date_of_birth)
+        self.max_hr_bpm = self.calc_max_hr(self.age)
 
 if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
     persons = Person.load_person_data()
     person_names = Person.get_person_list(persons)
-    print(person_names)
-    print(Person.find_person_data_by_name("Huber, Julian"))
+    #print(person_names)
+    #print(Person.find_person_data_by_name("Huber, Julian"))
+    #print(Person.calc_max_hr())
+    #print(Person.estimate_max_hr(21))
