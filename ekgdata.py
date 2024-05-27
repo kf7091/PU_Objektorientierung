@@ -26,6 +26,9 @@ class EKGdata:
         Returns:
             - peaks (list): A list of the indices of the peaks
         """
+        ### how does this work?
+
+        
         # Respace the series
         series = series.iloc[::respacing_factor]
     
