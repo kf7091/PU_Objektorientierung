@@ -3,7 +3,7 @@ from person import Person
 from PIL import Image
 
 person_data = Person.load_person_data() 
-person_names_list = Person.get_person_list()
+person_names_list = Person.get_person_list(person_data)
 
 # Session State wird leer angelegt, solange er noch nicht existiert
 if 'current_user' not in st.session_state:
@@ -27,3 +27,7 @@ st.image(image, caption = st.session_state.current_user) # Bild anzeigen lassen
 
 st.write("Name der ausgewählten Versuchsperson: ", st.session_state.current_user) 
 
+
+'''Drop down mit ID / Datum um EKG Daten zu laden und anzuzeigen
+   wieder eine Liste erstellen der EKGs wie bei den Personen mit Vorname und Nachname
+   '''

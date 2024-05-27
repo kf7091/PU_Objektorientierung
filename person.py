@@ -76,6 +76,7 @@ class Person:
         self.age = self.calc_age(self.date_of_birth)
         self.max_hr_bpm = self.calc_max_hr(self.age)
 
+
 if __name__ == "__main__":
     print("This is a module with some functions to read the person data")
     persons = Person.load_person_data()
