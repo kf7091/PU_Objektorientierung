@@ -18,12 +18,8 @@ class Person:
         person_data = Person.load_person_data()
         for eintrag in person_data:
             if eintrag["id"] == id:
-                return Person(eintrag)
-            else:
-                print("Person existiert nicht")
-        else:
-            return None
-
+                return Person(eintrag)     
+        raise ValueError("Person with {} not found".format(id))                             
 
     @staticmethod
     def get_person_list(person_data):
@@ -70,9 +66,6 @@ class Person:
         max_hr_bpm =  223 - 0.9 * age
         return int(max_hr_bpm)
     
-    @staticmethod
-
-
 
     def __init__(self, person_dict) -> None:
         self.date_of_birth = person_dict["date_of_birth"]
@@ -91,3 +84,4 @@ if __name__ == "__main__":
     #print(Person.find_person_data_by_name("Huber, Julian"))
     #print(Person.calc_max_hr())
     #print(Person.estimate_max_hr(21))
+    print(Person.load_by_id(5).age)
