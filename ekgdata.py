@@ -68,8 +68,15 @@ class EKGdata:
             return self.hr_pds
 
         
-    def plot_time_series():
-        pass
+    def plot_time_series(self):
+        self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"], y=self.df["EKG in mV"]))
+        r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks], y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
+        self.time_series.add_trace(r_peaks)
+        return self.time_series
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -98,10 +105,7 @@ if __name__ == "__main__":
     print(ekg.estimate_hr()[:10])
 
     print('plot')
-    fig = go.Figure(data=go.Scatter(x=ekg.df["Time in ms"], y=ekg.df["EKG in mV"]))
-    add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
-    fig.add_trace(add_trace)
-    #fig.show()
+    ekg.plot_time_series().show()
 
-    fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
+    #fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
     #fig_hr.show()
