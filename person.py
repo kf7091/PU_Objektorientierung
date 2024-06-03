@@ -66,6 +66,32 @@ class Person:
         max_hr_bpm =  223 - 0.9 * age
         return int(max_hr_bpm)
     
+    @staticmethod
+    def get_ekg_list(person_data):
+        """A Function that takes the persons-dictionary and returns a list of all person names"""
+        list_of_ekgs = []
+        for eintrag in person_data:
+            ekg_tests = eintrag.get("ekg_tests", [])  # Get the list of ekg_tests or an empty list if it doesn't exist
+            for ekg_test in ekg_tests:
+                ekg_id = ekg_test.get("id")
+                ekg_date = ekg_test.get("date")
+                list_of_ekgs.append((ekg_id, ekg_date))
+        return list_of_ekgs
+
+    @staticmethod
+    def ekgs_of_person(person_data, id):
+        """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
+        list_ekgs_of_person = []
+        for eintrag in person_data:
+            if eintrag["id"] == id:
+                ekg_tests = eintrag.get("ekg_tests", [])
+                for ekg_test in ekg_tests:
+                    ekg_id = ekg_test.get("id")
+                    ekg_date = ekg_test.get("date")
+                    list_ekgs_of_person.append((ekg_id, ekg_date))
+                return list_ekgs_of_person
+        return []
+
 
     def __init__(self, person_dict) -> None:
         self.date_of_birth = person_dict["date_of_birth"]
@@ -88,3 +114,6 @@ if __name__ == "__main__":
     #print(Person.load_by_id().age)
     #print(Person.load_by_id(2).max_hr_bpm)
     #print(Person.load_by_id(2).age)
+    print(Person.get_ekg_list(persons))
+    print(Person.ekgs_of_person(persons, 1))
+
