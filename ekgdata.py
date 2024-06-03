@@ -23,7 +23,7 @@ class EKGdata:
             - threshold (float): The threshold for the peaks
             - respacing_factor (int): The factor to respace the series
         Returns:
-            - peaks (list): A list of the indices of the peaks
+            - self.peaks (list): A list of the indices of the peaks
         """
         
         # Respace the series
@@ -43,7 +43,7 @@ class EKGdata:
             current = next
             next = row
 
-            if last < current and current > next and current > threshold:
+            if last < current and current >= next and current > threshold:
                 self.peaks.append(index-respacing_factor)
 
         return self.peaks
@@ -54,10 +54,13 @@ class EKGdata:
             raise ValueError("No peaks found - please run find_peaks() first")
         else:
             print(self.peaks[:1])
-            hr = pd.Series("HR", name="HR", index=self.peaks)
+            hr_list = []
             for i in range(1, len(self.peaks)):
-                hr.at[i, 'HR'] = 1/((self.peaks[i] - self.peaks[i-1])/60000)
-        return hr
+                hr_list.append(1/((self.peaks[i] - self.peaks[i-1])/60000))
+                print(i, hr_list[i-1])
+                print(self.peaks[i], self.peaks[i-1], self.peaks[i] - self.peaks[i-1])
+            self.hr_pds = pd.Series(hr_list, name="HR", index=self.peaks[1:])
+            return self.hr_pds
 
         
     def plot_time_series():
@@ -83,13 +86,14 @@ if __name__ == "__main__":
     print(type(ekg_dict))
 
     print('find peaks')
-    ekg.find_peaks(250)
+    ekg.find_peaks(340, 4)
     print(ekg.peaks[:10])
 
     print('estimate hr')
     print(ekg.estimate_hr()[:10])
 
+'''    print('plot')
     fig = go.Figure(data=go.Scatter(x=ekg.df["Time in ms"], y=ekg.df["EKG in mV"]))
-    #add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
-    #fig.add_trace(add_trace)
-    fig.show()
+    add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
+    fig.add_trace(add_trace)
+    fig.show()'''
