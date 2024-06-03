@@ -49,28 +49,38 @@ class EKGdata:
         return self.peaks
     
     def estimate_hr(self):
-        ''' Estimate the heart rate from the peaks found in the EKG data
-            Args:
-            Returns:
-                - self.hr_pds (pd.Series): A pandas series with the heart rate values
+        ''' 
+        Estimate the heart rate from the R-peaks found in the EKG data
+        Args:
+        Returns:
+            - self.hr_pds (pd.Series): A pandas series with the heart rate values
         '''
         # Check if self.peaks exists
         if not hasattr(self, 'peaks'):
             raise ValueError("No peaks found - please run find_peaks() first")
-        
         else:
             hr_list = []
             for i in range(1, len(self.peaks)):
+                # Calculate the time delta between two peaks in ms (for better readability)
                 time_delta_ms = self.df['Time in ms'].iloc[self.peaks[i]] - self.df['Time in ms'].iloc[self.peaks[i-1]]
+                # Calculate the heart rate in bpm and append it to the list
                 hr_list.append(60000/time_delta_ms)
 
+            # Create a pandas series with the heart rate values
             self.hr_pds = pd.Series(hr_list, name="HR", index=self.peaks[1:])
             return self.hr_pds
 
         
     def plot_time_series(self):
-        self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"], y=self.df["EKG in mV"]))
-        r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks], y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
+        ''' Plot the EKG data with the peaks found
+            Args:
+            Returns:
+                - self.time_series (plotly.graph_objects.Figure): A plotly figure with the EKG data
+        '''
+        # create a plotly figure with the raw EKG data and time in seconds
+        self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"]/1000, y=self.df["EKG in mV"]))
+        # create a scatter plot with the R-peaks and add it to the figure
+        r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks]/1000, y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
         self.time_series.add_trace(r_peaks)
         return self.time_series
 
