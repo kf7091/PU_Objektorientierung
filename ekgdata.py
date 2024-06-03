@@ -49,16 +49,21 @@ class EKGdata:
         return self.peaks
     
     def estimate_hr(self):
-        ''' Estimate the heart rate from the peaks found in the EKG data'''
+        ''' Estimate the heart rate from the peaks found in the EKG data
+            Args:
+            Returns:
+                - self.hr_pds (pd.Series): A pandas series with the heart rate values
+        '''
+        # Check if self.peaks exists
         if not hasattr(self, 'peaks'):
             raise ValueError("No peaks found - please run find_peaks() first")
+        
         else:
-            print(self.peaks[:1])
             hr_list = []
             for i in range(1, len(self.peaks)):
-                hr_list.append(1/((self.peaks[i] - self.peaks[i-1])/60000))
-                print(i, hr_list[i-1])
-                print(self.peaks[i], self.peaks[i-1], self.peaks[i] - self.peaks[i-1])
+                time_delta_ms = self.df['Time in ms'].iloc[self.peaks[i]] - self.df['Time in ms'].iloc[self.peaks[i-1]]
+                hr_list.append(60000/time_delta_ms)
+
             self.hr_pds = pd.Series(hr_list, name="HR", index=self.peaks[1:])
             return self.hr_pds
 
@@ -92,8 +97,11 @@ if __name__ == "__main__":
     print('estimate hr')
     print(ekg.estimate_hr()[:10])
 
-'''    print('plot')
+    print('plot')
     fig = go.Figure(data=go.Scatter(x=ekg.df["Time in ms"], y=ekg.df["EKG in mV"]))
     add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
     fig.add_trace(add_trace)
-    fig.show()'''
+    #fig.show()
+
+    fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
+    #fig_hr.show()
