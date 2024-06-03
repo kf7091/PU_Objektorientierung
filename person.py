@@ -66,8 +66,8 @@ class Person:
         max_hr_bpm =  223 - 0.9 * age
         return int(max_hr_bpm)
     
-    @staticmethod
-    def get_ekg_list(person_data):
+    @staticmethod 
+    def get_ekg_list(person_data): # Mögliche Funktion für die Anzeige aller EKGs evtl löschen
         """A Function that takes the persons-dictionary and returns a list of all person names"""
         list_of_ekgs = []
         for eintrag in person_data:
@@ -79,7 +79,7 @@ class Person:
         return list_of_ekgs
 
     @staticmethod
-    def ekgs_of_person(person_data, id):
+    def ekgs_of_person(person_data, id): 
         """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
         list_ekgs_of_person = []
         for eintrag in person_data:
@@ -88,7 +88,7 @@ class Person:
                 for ekg_test in ekg_tests:
                     ekg_id = ekg_test.get("id")
                     ekg_date = ekg_test.get("date")
-                    list_ekgs_of_person.append((ekg_id, ekg_date))
+                    list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
                 return list_ekgs_of_person
         return []
 
