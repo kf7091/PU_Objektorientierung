@@ -1,6 +1,5 @@
 import json
 import pandas as pd
-import plotly.graph_objects as go
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
@@ -24,7 +23,7 @@ class EKGdata:
             - threshold (float): The threshold for the peaks
             - respacing_factor (int): The factor to respace the series
         Returns:
-            - peaks (list): A list of the indices of the peaks
+            - self.peaks (list): A list of the indices of the peaks
         """
         
         # Respace the series
@@ -44,21 +43,29 @@ class EKGdata:
             current = next
             next = row
 
-            if last < current and current > next and current > threshold:
+            if last < current and current >= next and current > threshold:
                 self.peaks.append(index-respacing_factor)
 
         return self.peaks
     
     def estimate_hr(self):
-        ''' Estimate the heart rate from the peaks found in the EKG data'''
+        ''' Estimate the heart rate from the peaks found in the EKG data
+            Args:
+            Returns:
+                - self.hr_pds (pd.Series): A pandas series with the heart rate values
+        '''
+        # Check if self.peaks exists
         if not hasattr(self, 'peaks'):
             raise ValueError("No peaks found - please run find_peaks() first")
+        
         else:
-            print(self.peaks[:1])
-            hr = pd.Series("HR", name="HR", index=self.peaks)
+            hr_list = []
             for i in range(1, len(self.peaks)):
-                hr.at[i, 'HR'] = 1/((self.peaks[i] - self.peaks[i-1])/60000)
-        return hr
+                time_delta_ms = self.df['Time in ms'].iloc[self.peaks[i]] - self.df['Time in ms'].iloc[self.peaks[i-1]]
+                hr_list.append(60000/time_delta_ms)
+
+            self.hr_pds = pd.Series(hr_list, name="HR", index=self.peaks[1:])
+            return self.hr_pds
 
         
     def plot_time_series():
@@ -66,6 +73,7 @@ class EKGdata:
 
 
 if __name__ == "__main__":
+    import plotly.graph_objects as go
     print("This is a module with some functions to read the EKG data")
 
     print('Loading Data')
@@ -83,13 +91,17 @@ if __name__ == "__main__":
     print(type(ekg_dict))
 
     print('find peaks')
-    ekg.find_peaks(250)
+    ekg.find_peaks(340, 4)
     print(ekg.peaks[:10])
 
     print('estimate hr')
     print(ekg.estimate_hr()[:10])
 
+    print('plot')
     fig = go.Figure(data=go.Scatter(x=ekg.df["Time in ms"], y=ekg.df["EKG in mV"]))
-    #add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
-    #fig.add_trace(add_trace)
-    fig.show()
+    add_trace = go.Scatter(x=ekg.df["Time in ms"].iloc[ekg.peaks], y=ekg.df["EKG in mV"].iloc[ekg.peaks], mode='markers', marker=dict(color='red', size=8))
+    fig.add_trace(add_trace)
+    #fig.show()
+
+    fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
+    #fig_hr.show()
