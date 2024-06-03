@@ -1,6 +1,5 @@
 import json
 import pandas as pd
-import plotly.graph_objects as go
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
@@ -66,6 +65,7 @@ class EKGdata:
 
 
 if __name__ == "__main__":
+    import plotly.graph_objects as go
     print("This is a module with some functions to read the EKG data")
 
     print('Loading Data')
