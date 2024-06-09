@@ -1,12 +1,24 @@
 import json
 import pandas as pd
+import plotly.graph_objects as go
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
 class EKGdata:
 
     def __init__(self, person_id:int, ekg_id:int):
-        ekg_dict = json.load(open("data/person_db.json"))[person_id]["ekg_tests"][ekg_id]
+        
+        db = json.load(open("data/person_db.json"))
+        for p_id in db:
+            if p_id['id'] == person_id:
+                person = p_id
+                break
+        print(person)
+        for ekg in person['ekg_tests']:
+            if ekg['id'] == ekg_id:
+                ekg_dict = ekg
+                break
+        print(ekg_dict)
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
         self.data = ekg_dict["result_link"]
@@ -81,18 +93,26 @@ class EKGdata:
         self.time_series.add_trace(r_peaks)
         return self.time_series
 
+    @staticmethod
+    def load_by_id(self, person_id:int, ekg_id:int):
+        ekg_dict = json.load(open("data/person_db.json"))[person_id-1]["ekg_tests"][ekg_id-1]
+        self.id = ekg_dict["id"]
+        self.date = ekg_dict["date"]
+        self.data = ekg_dict["result_link"]
+        self.df = pd.read_csv(self.data, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
+        return self
 
 
 
 
 if __name__ == "__main__":
-    import plotly.graph_objects as go
+    
     print("This is a module with some functions to read the EKG data")
 
     print('create EKGdata object')
-    ekg = EKGdata(0, 0)
-    print(ekg.df.head())
+    ekg = EKGdata(2, 3)
+    '''print(ekg.df.head())
     print(type(ekg))
 
 
@@ -104,7 +124,7 @@ if __name__ == "__main__":
     print(ekg.estimate_hr()[:10])
 
     print('plot')
-    ekg.plot_time_series().show()
+    ekg.plot_time_series().show()'''
 
     #fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
     #fig_hr.show()
