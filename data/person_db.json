@@ -34,4 +34,12 @@
 		"date": "11.3.2023",
 		"result_link": "data/ekg_data/03_Ruhe.txt"
 	}]
-}]
+},	{
+	"id": 4,
+	"date_of_birth": 2000,
+	"firstname": "Max",
+	"lastname": "Leer",
+    "picture_path" : "data/pictures/empty.png",
+	"ekg_tests": []
+}
+]
