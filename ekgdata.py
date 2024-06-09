@@ -5,10 +5,8 @@ import pandas as pd
 
 class EKGdata:
 
-    def __init__(self, person_id, ekg_id):
-        file = open("data/person_db.json")
-        person_data = json.load(file)
-        ekg_dict = person_data[person_id]["ekg_tests"][ekg_id]
+    def __init__(self, person_id:int, ekg_id:int):
+        ekg_dict = json.load(open("data/person_db.json"))[person_id]["ekg_tests"][ekg_id]
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
         self.data = ekg_dict["result_link"]
