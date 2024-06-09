@@ -1,7 +1,5 @@
 import json
 import datetime
-import numpy as np
-
 
 class Person:
     
