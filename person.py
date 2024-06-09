@@ -81,7 +81,7 @@ class Person:
     @staticmethod
     def ekgs_of_person(person_data, id): 
         """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
-        list_ekgs_of_person = []
+        #list_ekgs_of_person = []
         list_of_ekgs_id = []
         for eintrag in person_data:
             if eintrag["id"] == id:
@@ -89,9 +89,9 @@ class Person:
                 for ekg_test in ekg_tests:
                     ekg_id = ekg_test.get("id")
                     ekg_date = ekg_test.get("date")
-                    list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
+                    #list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
                     list_of_ekgs_id.append(ekg_id)
-                return list_ekgs_of_person, list_of_ekgs_id
+                return list_of_ekgs_id #list_ekgs_of_person 
         return []
 
 
