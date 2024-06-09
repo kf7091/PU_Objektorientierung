@@ -5,17 +5,16 @@ import pandas as pd
 
 class EKGdata:
 
-## Konstruktor der Klasse soll die Daten einlesen
-
-    def __init__(self, ekg_dict):
+    def __init__(self, person_id, ekg_id):
+        file = open("data/person_db.json")
+        person_data = json.load(file)
+        ekg_dict = person_data[person_id]["ekg_tests"][ekg_id]
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
         self.data = ekg_dict["result_link"]
         self.df = pd.read_csv(self.data, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
-    def load_by_id(self, id):
-        return {'id': id, 'date': self.date, 'result_link': self.data}
-
+    
     def find_peaks(self, threshold:float, respacing_factor:int=5):
         """
         A function to find the peaks in a series
@@ -93,19 +92,11 @@ if __name__ == "__main__":
     import plotly.graph_objects as go
     print("This is a module with some functions to read the EKG data")
 
-    print('Loading Data')
-    file = open("data/person_db.json")
-    person_data = json.load(file)
-
-    print('convert to dict')
-    ekg_dict = person_data[0]["ekg_tests"][0]
-    print(ekg_dict)
-
     print('create EKGdata object')
-    ekg = EKGdata(ekg_dict)
+    ekg = EKGdata(0, 0)
     print(ekg.df.head())
     print(type(ekg))
-    print(type(ekg_dict))
+
 
     print('find peaks')
     ekg.find_peaks(340, 4)
