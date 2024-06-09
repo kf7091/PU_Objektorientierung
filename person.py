@@ -103,8 +103,7 @@ class Person:
         self.id = person_dict["id"]
         self.age = self.calc_age(self.date_of_birth)
         self.max_hr_bpm = self.calc_max_hr(self.age)
-        self.ekg_ids = self.ekgs_of_person(person_dict, self.id)
-
+        
 
 
 if __name__ == "__main__":
