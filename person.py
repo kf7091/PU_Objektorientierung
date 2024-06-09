@@ -88,7 +88,8 @@ class Person:
             if eintrag["id"] == id:
                 ekg_tests = eintrag.get("ekg_tests")
                 if ekg_tests is None or len(ekg_tests) == 0:
-                    return fehlermeldung
+                    return fehlermeldung 
+                    
                 else:
                     for ekg_test in ekg_tests:
                         ekg_id = ekg_test.get("id")
@@ -123,5 +124,5 @@ if __name__ == "__main__":
     #print(Person.load_by_id(2).age)
     #print(Person.get_ekg_list(persons))
     #print(Person.ekgs_of_person(persons, 1))
-    print(Person.ekgs_of_person(persons, 2))
+    print(Person.ekgs_of_person(persons, 1))
     
