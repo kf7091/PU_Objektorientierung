@@ -39,7 +39,7 @@
 	"date_of_birth": 2000,
 	"firstname": "Max",
 	"lastname": "Leer",
-    "picture_path" : "data/pictures/empty.jpg",
+    "picture_path" : "data/pictures/empty.png",
 	"ekg_tests": []
 }
 ]
