@@ -2,6 +2,7 @@
 - pandas
 - plottly
 - streamlit
+- tinydb
 
 ### oder
 - `pip install -r requirements.txt`

@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import plotly.graph_objects as go
+from tinydb import TinyDB, Query
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
