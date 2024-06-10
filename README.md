@@ -6,6 +6,10 @@
 ### oder
 - `pip install -r requirements.txt`
 
+## Verwendung mit share.streamlit
+- Dieser Link führt direkt zur App:
+- https://puobjektorientierung-ag2xywqczz7qcwhqsb3xvz-main.streamlit.app/
+
 ## Verwendung
 
 - Klonen sie das Github-Repository auf Ihren PC.
