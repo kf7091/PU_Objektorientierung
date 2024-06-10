@@ -41,6 +41,7 @@ st.session_state.current_user = st.selectbox(
 # Tab-Elemente erstellen
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 
+
 #st.image(image, caption = st.session_state.current_user) # Bild anzeigen lassen --> wurde ersetzt
 #st.write("Name der ausgewählten Versuchsperson: ", st.session_state.current_user) --> wurde erstezt 
 
