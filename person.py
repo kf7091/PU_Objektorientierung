@@ -6,24 +6,22 @@ class Person:
     
     @staticmethod
     def load_person_data():
-        """A Function that knows where the person Database is and returns a Dictionary with the Persons"""
-        person_data = TinyDB("data/person_db.json").table("persons")
-        return person_data
+        """A Function that knows where the person Database is and returns a TinyDB-Table with the Persons"""
+        return TinyDB("data/person_db.json").table("persons")
 
     @staticmethod
     def load_by_id(id):
         """A Function that loads a person by id"""
-        person_data = Person.load_person_data()
-        for eintrag in person_data:
-            if eintrag["id"] == id:
-                return Person(eintrag)     
-        raise ValueError("Person with {} not found".format(id))                             
+        try:
+            person = Person.load_person_data().get(doc_id=id)
+            return person
+        except:
+            raise ValueError("Person with ID {} not found".format(id))                            
 
     @staticmethod
     def get_person_list(person_data):
         """A Function that takes the persons-dictionary and returns a list auf all person names"""
         list_of_names = []
-
         for eintrag in person_data:
             list_of_names.append(eintrag["lastname"] + ", " +  eintrag["firstname"])
         return list_of_names
@@ -76,27 +74,19 @@ class Person:
                 list_of_ekgs.append((ekg_id, ekg_date))
         return list_of_ekgs
 
+
+
+#move to ekgdata.py? 
     @staticmethod
-    def ekgs_of_person(person_data, id): 
-        """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
-        
-        list_ekgs_of_person = []
-        list_of_ekgs_id = []
-        fehlermeldung = ["Keine EKGs vorhanden. Andere Person wählen!"]
-        for eintrag in person_data:
-            if eintrag["id"] == id:
-                ekg_tests = eintrag.get("ekg_tests")
-                if ekg_tests is None or len(ekg_tests) == 0:
-                    return fehlermeldung 
-                    
-                else:
-                    for ekg_test in ekg_tests:
-                        ekg_id = ekg_test.get("id")
-                        ekg_date = ekg_test.get("date")
-                        list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
-                        list_of_ekgs_id.append(ekg_id)
-                    return list_of_ekgs_id #list_ekgs_of_person 
-        return []
+    def ekgs_of_person(ekg_table, person_id): 
+        """A Function that takes the EKG-Table and an id, and returns the IDs of for that id"""
+        list_of_ekg_ids = []
+        for document in ekg_table:
+            if document["person_id"] == person_id:
+                list_of_ekg_ids.append(document.doc_id)
+        if len(list_of_ekg_ids) == 0:
+            return ["Keine EKGs vorhanden. Andere Person wählen!"]
+        return list_of_ekg_ids
 
 
     def __init__(self, person_dict) -> None:
@@ -123,5 +113,5 @@ if __name__ == "__main__":
     #print(Person.load_by_id(2).age)
     #print(Person.get_ekg_list(persons))
     #print(Person.ekgs_of_person(persons, 1))
-    print(Person.ekgs_of_person(persons, 1))
+    print(Person.ekgs_of_person(persons.table('ekg_tests'), 1))
     

@@ -95,6 +95,13 @@ class EKGdata:
 
         return self
     '''
+    @staticmethod
+    def get_ekgids_by_personid(ekg_table, person_id:int):
+        ekg_ids = []
+        for document in ekg_table:
+            if document["person_id"] == person_id:
+                ekg_ids.append(document.doc_id)
+        return ekg_ids
 
 
 

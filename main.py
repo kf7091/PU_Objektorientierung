@@ -3,19 +3,23 @@ from person import Person
 from PIL import Image
 from ekgdata import EKGdata
 import plotly.graph_objects as go
+from tinydb import TinyDB
 
-person_data = Person.load_person_data() 
-person_names_list = Person.get_person_list(person_data)
+#person_data = Person.load_person_data()
+db = TinyDB("data/person_db.json")
+person_names_list = Person.get_person_list(db.table("persons"))
 
 
 # Session State wird leer angelegt, solange er noch nicht existiert
 if 'current_user' not in st.session_state:
     st.session_state.current_user = 'None'
+    st.session_state.selected_person = 'None'
+    st.session_state.selected_ekg = 'None'
 
 st.write("# EKG APP") # Eine Überschrift der ersten Ebene
 st.write("### Versuchsperson auswählen") # Eine Überschrift der zweiten Ebene
 
-st.session_state.current_user = st.selectbox(
+st.session_state.selected_person = st.selectbox(
     'Versuchsperson',
     options = person_names_list, key="sbVersuchsperson")
 
