@@ -9,7 +9,8 @@ class EKGdata:
 
     def __init__(self, person_id:int, ekg_id:int):
         ekg_table = TinyDB("data/person_db.json").table("ekg_tests")
-
+        self.id = ekg_id
+        self.date = ekg_table.get(doc_id=ekg_id)["date"]
         
 
         db = json.load(open("data/person_db.json"))
