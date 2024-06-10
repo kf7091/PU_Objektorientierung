@@ -35,3 +35,4 @@
         - Erlaubt alles zu installieren `Set-ExecutionPolicy Unrestricted -Scope CurrentUser`
 ### Linux:
 - `source <Name des venv Ordners>/bin/activate`
+https://puobjektorientierung-65swqscrhvfbugeqmfmw4o.streamlit.app/
