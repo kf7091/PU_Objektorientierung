@@ -8,7 +8,10 @@ from tinydb import TinyDB, Query
 class EKGdata:
 
     def __init__(self, person_id:int, ekg_id:int):
+        ekg_table = TinyDB("data/person_db.json").table("ekg_tests")
+
         
+
         db = json.load(open("data/person_db.json"))
         for p_id in db:
             if p_id['id'] == person_id:
