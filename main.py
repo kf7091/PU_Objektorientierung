@@ -1,6 +1,8 @@
 import streamlit as st
 from person import Person
 from PIL import Image
+from ekgdata import EKGdata
+import plotly.graph_objects as go
 
 person_data = Person.load_person_data() 
 person_names_list = Person.get_person_list(person_data)
@@ -38,15 +40,23 @@ st.session_state.current_user = st.selectbox(
     'EKG-Daten auswählen:',
     options = person_ekg_list, key="sbEKGliste")
 
+ekg = EKGdata(current_person_obj.id, st.session_state.current_user)
+ekg.find_peaks(340, 4)
+hr = ekg.estimate_hr()
+
 # Tab-Elemente erstellen
-tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+tab1, tab2 = st.tabs(["Daten", "Grafik"])
 
 
 #st.image(image, caption = st.session_state.current_user) # Bild anzeigen lassen --> wurde ersetzt
 #st.write("Name der ausgewählten Versuchsperson: ", st.session_state.current_user) --> wurde erstezt 
 
 
-'''Drop down mit ID / Datum um EKG Daten zu laden und anzuzeigen
-   wieder eine Liste erstellen der EKGs wie bei den Personen mit Vorname und Nachname
-'''
+with tab1:
+    st.write("Daten des EKGs: {}".format(st.session_state.current_user))
+    st.write('Datum:', ekg.date)
+    st.write("Durchschnittliche Herzfrequenz: ", int(hr.mean()))
 
+with tab2:
+    fig = go.Figure(data=go.Scatter(x=hr.index/1000, y=hr), layout=go.Layout(title="Herzfrequenz" ,xaxis_title="Zeit in s", yaxis_title="Herzfrequenz in bpm"))
+    st.plotly_chart(fig, use_container_width=True)

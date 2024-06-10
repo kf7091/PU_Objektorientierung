@@ -1,6 +1,5 @@
 ## Requirements
 - pandas
-- numpy
 - plottly
 - streamlit
 
@@ -14,7 +13,10 @@
     - Führen sie folgende Befehl aus: `git clone <Link des Repositorys>` 
 - (optional) aktivieren Sie Ihr Virtual Environment
 - führen Sie den Befehl `streamlit run main.py` aus
-- ...
+- die Anwendung sollte sich in Ihrem Browser öffnen
+- Sie können nun die gewünschte Person auswählen
+- die Anwendung zeigt Ihnen die Daten der gewählten Person an und können ausgewählt werden
+- zu den ausgewählten Daten werden nun zwei Tabs mit Daten und einer Grafik angezeigt
 
 
 ## Befehle um Virtual Environment zu erstellen

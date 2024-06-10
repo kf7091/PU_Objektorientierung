@@ -1,21 +1,30 @@
 import json
 import pandas as pd
+import plotly.graph_objects as go
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
 class EKGdata:
 
-## Konstruktor der Klasse soll die Daten einlesen
-
-    def __init__(self, ekg_dict):
+    def __init__(self, person_id:int, ekg_id:int):
+        
+        db = json.load(open("data/person_db.json"))
+        for p_id in db:
+            if p_id['id'] == person_id:
+                person = p_id
+                break
+        print(person)
+        for ekg in person['ekg_tests']:
+            if ekg['id'] == ekg_id:
+                ekg_dict = ekg
+                break
+        print(ekg_dict)
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
         self.data = ekg_dict["result_link"]
         self.df = pd.read_csv(self.data, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
-    def load_by_id(self, id):
-        return {'id': id, 'date': self.date, 'result_link': self.data}
-
+    
     def find_peaks(self, threshold:float, respacing_factor:int=5):
         """
         A function to find the peaks in a series
@@ -84,28 +93,28 @@ class EKGdata:
         self.time_series.add_trace(r_peaks)
         return self.time_series
 
+    @staticmethod
+    def load_by_id(self, person_id:int, ekg_id:int):
+        ekg_dict = json.load(open("data/person_db.json"))[person_id-1]["ekg_tests"][ekg_id-1]
+        self.id = ekg_dict["id"]
+        self.date = ekg_dict["date"]
+        self.data = ekg_dict["result_link"]
+        self.df = pd.read_csv(self.data, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
+        return self
 
 
 
 
 if __name__ == "__main__":
-    import plotly.graph_objects as go
+    
     print("This is a module with some functions to read the EKG data")
 
-    print('Loading Data')
-    file = open("data/person_db.json")
-    person_data = json.load(file)
-
-    print('convert to dict')
-    ekg_dict = person_data[0]["ekg_tests"][0]
-    print(ekg_dict)
-
     print('create EKGdata object')
-    ekg = EKGdata(ekg_dict)
-    print(ekg.df.head())
+    ekg = EKGdata(2, 3)
+    '''print(ekg.df.head())
     print(type(ekg))
-    print(type(ekg_dict))
+
 
     print('find peaks')
     ekg.find_peaks(340, 4)
@@ -115,7 +124,7 @@ if __name__ == "__main__":
     print(ekg.estimate_hr()[:10])
 
     print('plot')
-    ekg.plot_time_series().show()
+    ekg.plot_time_series().show()'''
 
     #fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
     #fig_hr.show()

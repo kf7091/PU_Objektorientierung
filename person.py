@@ -1,7 +1,5 @@
 import json
 import datetime
-import numpy as np
-
 
 class Person:
     
@@ -82,14 +80,21 @@ class Person:
     def ekgs_of_person(person_data, id): 
         """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
         list_ekgs_of_person = []
+        list_of_ekgs_id = []
+        fehlermeldung = ["Keine EKGs vorhanden. Andere Person wählen!"]
         for eintrag in person_data:
             if eintrag["id"] == id:
-                ekg_tests = eintrag.get("ekg_tests", [])
-                for ekg_test in ekg_tests:
-                    ekg_id = ekg_test.get("id")
-                    ekg_date = ekg_test.get("date")
-                    list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
-                return list_ekgs_of_person
+                ekg_tests = eintrag.get("ekg_tests")
+                if ekg_tests is None or len(ekg_tests) == 0:
+                    return fehlermeldung 
+                    
+                else:
+                    for ekg_test in ekg_tests:
+                        ekg_id = ekg_test.get("id")
+                        ekg_date = ekg_test.get("date")
+                        list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
+                        list_of_ekgs_id.append(ekg_id)
+                    return list_of_ekgs_id #list_ekgs_of_person 
         return []
 
 
@@ -101,6 +106,7 @@ class Person:
         self.id = person_dict["id"]
         self.age = self.calc_age(self.date_of_birth)
         self.max_hr_bpm = self.calc_max_hr(self.age)
+        
 
 
 if __name__ == "__main__":
@@ -114,6 +120,7 @@ if __name__ == "__main__":
     #print(Person.load_by_id().age)
     #print(Person.load_by_id(2).max_hr_bpm)
     #print(Person.load_by_id(2).age)
-    print(Person.get_ekg_list(persons))
+    #print(Person.get_ekg_list(persons))
+    #print(Person.ekgs_of_person(persons, 1))
     print(Person.ekgs_of_person(persons, 1))
-
+    
