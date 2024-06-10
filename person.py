@@ -1,13 +1,13 @@
 import json
 import datetime
+from tinydb import TinyDB
 
 class Person:
     
     @staticmethod
     def load_person_data():
-        """A Function that knows where te person Database is and returns a Dictionary with the Persons"""
-        file = open("data/person_db.json")
-        person_data = json.load(file)
+        """A Function that knows where the person Database is and returns a Dictionary with the Persons"""
+        person_data = TinyDB("data/person_db.json").table("persons")
         return person_data
 
     @staticmethod
@@ -79,6 +79,7 @@ class Person:
     @staticmethod
     def ekgs_of_person(person_data, id): 
         """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
+        
         list_ekgs_of_person = []
         list_of_ekgs_id = []
         fehlermeldung = ["Keine EKGs vorhanden. Andere Person wählen!"]
@@ -99,12 +100,12 @@ class Person:
 
 
     def __init__(self, person_dict) -> None:
-        self.date_of_birth = person_dict["date_of_birth"]
+        self.year_of_birth = person_dict["year_of_birth"]
         self.firstname = person_dict["firstname"]
         self.lastname = person_dict["lastname"]
         self.picture_path = person_dict["picture_path"]
         self.id = person_dict["id"]
-        self.age = self.calc_age(self.date_of_birth)
+        self.age = self.calc_age(self.year_of_birth)
         self.max_hr_bpm = self.calc_max_hr(self.age)
         
 
