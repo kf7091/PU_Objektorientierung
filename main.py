@@ -40,6 +40,8 @@ st.session_state.current_user = st.selectbox(
     'EKG-Daten auswählen:',
     options = person_ekg_list, key="sbEKGliste")
 
+st.write("Ausgewähltes EKG: ", st.session_state.current_user, "von:", current_person_obj.firstname, current_person_obj.lastname)
+
 ekg = EKGdata(current_person_obj.id, st.session_state.current_user)
 ekg.find_peaks(340, 4)
 hr = ekg.estimate_hr()
