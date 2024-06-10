@@ -40,7 +40,7 @@ st.session_state.current_user = st.selectbox(
     'EKG-Daten auswählen:',
     options = person_ekg_list, key="sbEKGliste")
 
-ekg = EKGdata(current_person_obj.id, st.session_state.current_user)
+ekg = EKGdata(st.session_state.current_user)
 ekg.find_peaks(340, 4)
 hr = ekg.estimate_hr()
 

@@ -2,13 +2,13 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 
 # Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
 class EKGdata:
 
-    def __init__(self, person_id:int, ekg_id:int):
+    def __init__(self, ekg_id:int):
         ekg_table = TinyDB("data/person_db.json").table("ekg_tests")
         self.id = ekg_table.get(doc_id=ekg_id).doc_id
         self.date = datetime.strptime(ekg_table.get(doc_id=ekg_id)["date"], "%d.%m.%Y")
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     print("This is a module with some functions to read the EKG data")
 
     print('create EKGdata object')
-    ekg = EKGdata(2, 3)
+    ekg = EKGdata(3)
     print(ekg.__dict__)
     '''print(ekg.df.head())
     print(type(ekg))
