@@ -42,9 +42,12 @@ st.session_state.current_user = st.selectbox(
 
 st.write("Ausgewähltes EKG: ", st.session_state.current_user, "von:", current_person_obj.firstname, current_person_obj.lastname)
 
-ekg = EKGdata(current_person_obj.id, st.session_state.current_user)
-ekg.find_peaks(340, 4)
-hr = ekg.estimate_hr()
+try:
+    ekg = EKGdata(current_person_obj.id, st.session_state.current_user)
+    ekg.find_peaks(340, 4)
+    hr = ekg.estimate_hr()
+except:
+    st.write("Keine Daten vorhanden. Andere Person wählen!")
 
 # Tab-Elemente erstellen
 tab1, tab2 = st.tabs(["Daten", "Grafik"])
@@ -53,12 +56,14 @@ tab1, tab2 = st.tabs(["Daten", "Grafik"])
 #st.image(image, caption = st.session_state.current_user) # Bild anzeigen lassen --> wurde ersetzt
 #st.write("Name der ausgewählten Versuchsperson: ", st.session_state.current_user) --> wurde erstezt 
 
+try:
+    with tab1:
+        st.write("Daten des EKGs: {}".format(st.session_state.current_user))
+        st.write('Datum:', ekg.date)
+        st.write("Durchschnittliche Herzfrequenz: ", int(hr.mean()))
 
-with tab1:
-    st.write("Daten des EKGs: {}".format(st.session_state.current_user))
-    st.write('Datum:', ekg.date)
-    st.write("Durchschnittliche Herzfrequenz: ", int(hr.mean()))
-
-with tab2:
-    fig = go.Figure(data=go.Scatter(x=hr.index/1000, y=hr), layout=go.Layout(title="Herzfrequenz" ,xaxis_title="Zeit in s", yaxis_title="Herzfrequenz in bpm"))
-    st.plotly_chart(fig, use_container_width=True)
+    with tab2:
+        fig = go.Figure(data=go.Scatter(x=hr.index/1000, y=hr), layout=go.Layout(title="Herzfrequenz" ,xaxis_title="Zeit in s", yaxis_title="Herzfrequenz in bpm"))
+        st.plotly_chart(fig, use_container_width=True)
+except:
+    st.write("Keine Daten vorhanden. Andere Person wählen!")

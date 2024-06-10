@@ -81,21 +81,19 @@ class Person:
         """A Function that takes the persons-dictionary and an id, and returns the ekg_tests for that id"""
         list_ekgs_of_person = []
         list_of_ekgs_id = []
-        fehlermeldung = ["Keine EKGs vorhanden. Andere Person wählen!"]
-        for eintrag in person_data:
-            if eintrag["id"] == id:
-                ekg_tests = eintrag.get("ekg_tests")
-                if ekg_tests is None or len(ekg_tests) == 0:
-                    return fehlermeldung 
-                    
-                else:
+        try:
+            for eintrag in person_data:
+                if eintrag["id"] == id:
+                    ekg_tests = eintrag.get("ekg_tests")
                     for ekg_test in ekg_tests:
                         ekg_id = ekg_test.get("id")
                         ekg_date = ekg_test.get("date")
                         list_ekgs_of_person.append("EKG-ID: {} am {} ".format(ekg_id, ekg_date))
                         list_of_ekgs_id.append(ekg_id)
                     return list_of_ekgs_id #list_ekgs_of_person 
-        return []
+            return []
+        except:
+            return []
 
 
     def __init__(self, person_dict) -> None:
