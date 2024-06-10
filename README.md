@@ -7,8 +7,8 @@
 - `pip install -r requirements.txt`
 
 ## Verwendung mit share.streamlit
-- Dieser Link führt direkt zur App:
-- https://puobjektorientierung-ag2xywqczz7qcwhqsb3xvz-main.streamlit.app/
+- Über diesen Link ist eine Verwendung ohne Download des Repos möglich:
+- [Hier geht's zur App](https://puobjektorientierung-ag2xywqczz7qcwhqsb3xvz-main.streamlit.app/)
 
 ## Verwendung
 
