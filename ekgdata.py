@@ -126,5 +126,5 @@ if __name__ == "__main__":
     print('plot')
     ekg.plot_time_series().show()'''
 
-    #fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
-    #fig_hr.show()
+    fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
+    fig_hr.show()
