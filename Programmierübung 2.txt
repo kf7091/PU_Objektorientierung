@@ -1,19 +1,25 @@
 Programmierübung 2:
-- main.py reinigen
+- main.py refactoren
 	- funktionen in ekg und person auslagern
 	- plot funktionen auslagern
-
+	- tiny db einbauen
+- Deployed auf streamlit sharing
+	- QR-Code erstellen für Website
 - fit files einlesen
 - tiny db
-- Bei Daten Dauer des EKGs anzeigen
+	- Bei Daten Dauer des EKGs anzeigen
 - Nutzer / Testdaten editieren / hinzufügen
 	- geschlechterabhängig
 		- Herzratenberechnung
+
 - Herzratenvariabilität
-- Daten säubern
+- (Daten bereinigen)
 - User Interface verschönern und neu machen
 	- Zugriff beschränken (Passwörter)
 	- /Personen / EKG-Daten über UI hochladen 
+		- Drag and Drop
 	- hell / dunkel Modus (Theme ändern)
+	- User und Grafiken nebeinander anzeigen
 - Herzraten Diagramm im Durchschnittdarstellen
+	- Trendlinie
 
