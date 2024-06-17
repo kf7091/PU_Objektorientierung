@@ -18,6 +18,7 @@ Programmierübung 2:
 	- Zugriff beschränken (Passwörter)
 	- /Personen / EKG-Daten über UI hochladen 
 		- Drag and Drop
+		- in ein Pandas DataFrame wenn möglich
 	- hell / dunkel Modus (Theme ändern)
 	- User und Grafiken nebeinander anzeigen
 - Herzraten Diagramm im Durchschnittdarstellen
