@@ -75,3 +75,4 @@ try:
         st.plotly_chart(fig, use_container_width=True)
 except:
     st.write("Keine Daten vorhanden. Andere Person wählen!")
+    
