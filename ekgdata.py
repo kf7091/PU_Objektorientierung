@@ -84,7 +84,7 @@ class EKGdata:
         self.time_series.add_trace(r_peaks)
         return self.time_series
 
-'''
+    '''
    @staticmethod
    def load_by_id(self, person_id:int, ekg_id:int):
         ekg_dict = json.load(open("data/person_db.json"))[person_id-1]["ekg_tests"][ekg_id-1]
