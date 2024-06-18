@@ -11,8 +11,9 @@ Programmierübung 2:
 - Nutzer / Testdaten editieren / hinzufügen
 	- geschlechterabhängig
 		- Herzratenberechnung
-
+- Maximalpulsüberschreitung Wahrnung ausgeben
 - Herzratenvariabilität
+	- Ein Tab bei dem man alle Daten sieht
 - (Daten bereinigen)
 - User Interface verschönern und neu machen
 	- Zugriff beschränken (Passwörter)
