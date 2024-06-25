@@ -1,10 +1,7 @@
-import json
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from tinydb import TinyDB
-
-# Klasse EKG-Data für Peakfinder, die uns ermöglicht peaks zu finden
 
 class EKGdata:
 
@@ -19,11 +16,12 @@ class EKGdata:
     def find_peaks(self, threshold:float, respacing_factor:int=5):
         """
         A function to find the peaks in a series
-        Args:
-            - threshold (float): The threshold for the peaks
-            - respacing_factor (int): The factor to respace the series
-        Returns:
-            - self.peaks (list): A list of the indices of the peaks
+        ### Parameters
+        - Args:
+            - threshold (`float`): The threshold for the peaks
+            - respacing_factor (`int`): The factor to respace the series
+        - Returns:
+            - self.peaks (`list`): A list of the indices of the peaks
         """
         
         # Respace the series
@@ -51,9 +49,10 @@ class EKGdata:
     def estimate_hr(self):
         ''' 
         Estimate the heart rate from the R-peaks found in the EKG data
-        Args:
-        Returns:
-            - self.hr_pds (pd.Series): A pandas series with the heart rate values
+        ### Parameters
+        - Args:
+        - Returns:
+            - self.hr_pds (`pd.Series`): A pandas series with the heart rate values
         '''
         # Check if self.peaks exists
         if not hasattr(self, 'peaks'):
@@ -73,9 +72,10 @@ class EKGdata:
         
     def plot_time_series(self):
         ''' Plot the EKG data with the peaks found
-            Args:
-            Returns:
-                - self.time_series (plotly.graph_objects.Figure): A plotly figure with the EKG data
+            ### Parameters
+            - Args:
+            - Returns:
+                - self.time_series (`plotly.graph_objects.Figure`): A plotly figure with the EKG data
         '''
         # create a plotly figure with the raw EKG data and time in seconds
         self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"]/1000, y=self.df["EKG in mV"]))
@@ -83,6 +83,8 @@ class EKGdata:
         r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks]/1000, y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
         self.time_series.add_trace(r_peaks)
         return self.time_series
+    
+    def
 
     '''
    @staticmethod
@@ -96,13 +98,30 @@ class EKGdata:
         return self
     '''
     @staticmethod
-    def get_ekgids_by_personid(ekg_table, person_id:int):
+    def get_ekgids_by_personid(ekg_table:TinyDB.table_class, person_id:int):
+        '''
+        Staticmethod which gets all ekg_ids which belong to the given person_id
+        ### Parameters
+        - Args:
+            - ekg_table (`TinyBD.table_class`): Table of all ekgs
+            - person_id (`int`): id of the person
+        - Returns: 
+            - ekg_ids (`list`): list of the coresponding ekgs
+        '''
         ekg_ids = []
         for document in ekg_table:
             if document["person_id"] == person_id:
                 ekg_ids.append(document.doc_id)
         return ekg_ids
-
+    
+    @staticmethod
+    def load_ekg_table():
+        """A Function that knows where the person Database is and returns a TinyDB-Table with the EKGs
+        ### Parameters
+        - Args:
+        - Returns:
+            - (`TinyDB.Table`): A table with all EKGs"""
+        return TinyDB("data/person_db.json").table("ekg_tests")
 
 
 
