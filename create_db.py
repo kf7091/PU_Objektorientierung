@@ -1,6 +1,5 @@
 from tinydb import TinyDB, Query
 from tinydb.table import Document
-import json
 
 db = TinyDB("data/person_db.json")
 person_table = db.table("persons")

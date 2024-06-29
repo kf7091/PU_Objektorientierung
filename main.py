@@ -5,9 +5,9 @@ from ekgdata import EKGdata
 import plotly.graph_objects as go
 from tinydb import TinyDB
 
-#person_data = Person.load_person_data()
+person_data = Person.load_person_data()
 db = TinyDB("data/person_db.json")
-person_names_list = Person.get_person_list(db.table("persons"))
+person_names_list = Person.get_persons_list(db.table("persons"))
 
 
 # Session State wird leer angelegt, solange er noch nicht existiert
@@ -24,9 +24,9 @@ st.session_state.selected_person = st.selectbox(
     options = person_names_list, key="sbVersuchsperson")
 
 # Finden der Person - den String haben wir im Session state
-current_person = Person.find_person_data_by_name(st.session_state.current_user)
+current_person = Person.find_person_id_by_name(st.session_state.selected_person)
 current_person_obj = Person(current_person) # Erstellen eines Person-Objekts aus dem Dictionary
-person_ekg_list = Person.ekgs_of_person(person_data, current_person_obj.id) # Erstellen einer Liste von EKGs der gewählten Person
+person_ekg_list = EKGdata.get_ekgids_by_personid(current_person_obj.id) # Erstellen einer Liste von EKGs der gewählten Person
 
 image = Image.open(current_person_obj.picture_path) # Bild laden und Auslesen des Pfades aus dem zurückgegebenen Dictionary
 
