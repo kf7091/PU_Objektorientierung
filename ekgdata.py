@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from tinydb import TinyDB
+from tinydb.table import Table, Document
 
 class EKGdata:
 
@@ -117,7 +118,7 @@ class EKGdata:
         return ekg_ids
     
     @staticmethod
-    def load_ekg_table() -> TinyDB.table_class:
+    def load_ekg_table() -> Table:
         '''
         A Function that knows where the person Database is and returns a TinyDB-Table with the EKGs
         ### Parameters
