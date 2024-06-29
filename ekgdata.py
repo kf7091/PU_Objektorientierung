@@ -6,7 +6,7 @@ from tinydb import TinyDB
 class EKGdata:
 
     def __init__(self, ekg_id:int):
-        ekg_table = TinyDB("data/person_db.json").table("ekg_tests")
+        ekg_table = EKGdata.load_ekg_table()
         self.id = ekg_table.get(doc_id=ekg_id).doc_id
         self.date = datetime.strptime(ekg_table.get(doc_id=ekg_id)["date"], "%d.%m.%Y")
         self.data_link = ekg_table.get(doc_id=ekg_id)["result_link"]
@@ -14,7 +14,7 @@ class EKGdata:
 
     
     def find_peaks(self, threshold:float, respacing_factor:int=5):
-        """
+        '''
         A function to find the peaks in a series
         ### Parameters
         - Args:
@@ -22,7 +22,7 @@ class EKGdata:
             - respacing_factor (`int`): The factor to respace the series
         - Returns:
             - self.peaks (`list`): A list of the indices of the peaks
-        """
+        '''
         
         # Respace the series
         series = self.df["EKG in mV"].iloc[::respacing_factor]
@@ -71,11 +71,12 @@ class EKGdata:
 
         
     def plot_time_series(self):
-        ''' Plot the EKG data with the peaks found
-            ### Parameters
-            - Args:
-            - Returns:
-                - self.time_series (`plotly.graph_objects.Figure`): A plotly figure with the EKG data
+        '''
+        Plot the EKG data with the peaks found
+        ### Parameters
+        - Args:
+        - Returns:
+            - self.time_series (`plotly.graph_objects.Figure`): A plotly figure with the EKG data
         '''
         # create a plotly figure with the raw EKG data and time in seconds
         self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"]/1000, y=self.df["EKG in mV"]))
@@ -84,11 +85,11 @@ class EKGdata:
         self.time_series.add_trace(r_peaks)
         return self.time_series
     
-    def
+    #def
 
     '''
-   @staticmethod
-   def load_by_id(self, person_id:int, ekg_id:int):
+    @staticmethod
+    def load_by_id(self, person_id:int, ekg_id:int):
         ekg_dict = json.load(open("data/person_db.json"))[person_id-1]["ekg_tests"][ekg_id-1]
         self.id = ekg_dict["id"]
         self.date = ekg_dict["date"]
@@ -97,8 +98,9 @@ class EKGdata:
 
         return self
     '''
+
     @staticmethod
-    def get_ekgids_by_personid(ekg_table:TinyDB.table_class, person_id:int):
+    def get_ekgids_by_personid(person_id:int):
         '''
         Staticmethod which gets all ekg_ids which belong to the given person_id
         ### Parameters
@@ -109,18 +111,20 @@ class EKGdata:
             - ekg_ids (`list`): list of the coresponding ekgs
         '''
         ekg_ids = []
-        for document in ekg_table:
+        for document in EKGdata.load_ekg_table():
             if document["person_id"] == person_id:
                 ekg_ids.append(document.doc_id)
         return ekg_ids
     
     @staticmethod
     def load_ekg_table():
-        """A Function that knows where the person Database is and returns a TinyDB-Table with the EKGs
+        '''
+        A Function that knows where the person Database is and returns a TinyDB-Table with the EKGs
         ### Parameters
         - Args:
         - Returns:
-            - (`TinyDB.Table`): A table with all EKGs"""
+            - (`TinyDB.Table`): A table with all EKGs
+        '''
         return TinyDB("data/person_db.json").table("ekg_tests")
 
 
