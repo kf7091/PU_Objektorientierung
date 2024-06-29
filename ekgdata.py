@@ -9,7 +9,7 @@ class EKGdata:
     def __init__(self, ekg_id:int):
         ekg_table = EKGdata.load_ekg_table()
         self.id = ekg_table.get(doc_id=ekg_id).doc_id
-        self.date = datetime.strptime(ekg_table.get(doc_id=ekg_id)["date"], "%d.%m.%Y")
+        self.date = datetime.strptime(ekg_table.get(doc_id=ekg_id)["date"], "%Y-%m-%d")
         self.data_link = ekg_table.get(doc_id=ekg_id)["result_link"]
         self.df = pd.read_csv(self.data_link, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
