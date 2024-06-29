@@ -70,7 +70,7 @@ class EKGdata:
             return self.hr_pds
 
         
-    def plot_time_series(self) -> go.Figure:
+    def plot_time_series(self) -> go.Figure: #needs to be reworked
         '''
         Plot the EKG data with the peaks found
         ### Parameters
