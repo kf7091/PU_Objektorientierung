@@ -43,7 +43,7 @@ person_table.insert_multiple([
 ekg_table.insert_multiple([
     Document({
             "person_id": 3,
-            "date": "13.3.2023",
+            "date": "2023-03-13",
             "result_link": "data/ekg_data/03_Ruhe.txt"
         },
         doc_id=3
@@ -57,14 +57,14 @@ ekg_table.insert_multiple([
     ),
     Document({		
             "person_id": 1,
-		    "date": "11.3.2023",
+		    "date": "2023-03-11",
 		    "result_link": "data/ekg_data/04_Belastung.txt"
 	    },
         doc_id=4
     ),
     Document({
             "person_id": 2,
-            "date": "12.3.2023",
+            "date": "2023-03-12",
             "result_link": "data/ekg_data/02_Ruhe.txt"
         },
         doc_id=2
