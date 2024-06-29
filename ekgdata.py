@@ -13,7 +13,7 @@ class EKGdata:
         self.df = pd.read_csv(self.data_link, sep='\t', header=None, names=['EKG in mV','Time in ms',])
 
     
-    def find_peaks(self, threshold:float, respacing_factor:int=5):
+    def find_peaks(self, threshold:float, respacing_factor:int=5) -> list:
         '''
         A function to find the peaks in a series
         ### Parameters
@@ -46,7 +46,7 @@ class EKGdata:
 
         return self.peaks
     
-    def estimate_hr(self):
+    def estimate_hr(self) -> pd.Series:
         ''' 
         Estimate the heart rate from the R-peaks found in the EKG data
         ### Parameters
@@ -70,7 +70,7 @@ class EKGdata:
             return self.hr_pds
 
         
-    def plot_time_series(self):
+    def plot_time_series(self) -> go.Figure:
         '''
         Plot the EKG data with the peaks found
         ### Parameters
@@ -100,7 +100,7 @@ class EKGdata:
     '''
 
     @staticmethod
-    def get_ekgids_by_personid(person_id:int):
+    def get_ekgids_by_personid(person_id:int) -> list:
         '''
         Staticmethod which gets all ekg_ids which belong to the given person_id
         ### Parameters
@@ -117,7 +117,7 @@ class EKGdata:
         return ekg_ids
     
     @staticmethod
-    def load_ekg_table():
+    def load_ekg_table() -> TinyDB.table_class:
         '''
         A Function that knows where the person Database is and returns a TinyDB-Table with the EKGs
         ### Parameters
