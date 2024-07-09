@@ -72,16 +72,11 @@ try:
         st.write("Durchschnittliche Herzfrequenz: ", int(hr.mean()))
 
     with tab2:
-        fig = go.Figure(data=go.Scatter(x=hr.index/1000, y=hr), layout=go.Layout(title="Herzfrequenz" ,xaxis_title="Zeit in s", yaxis_title="Herzfrequenz in bpm"))
-        fig.update_layout(
-            xaxis=dict(
-                rangeslider=dict(
-                    visible=True
-                ),
-                type="linear"
-            )
-        )
-        st.plotly_chart(fig, use_container_width=True)
+        st.write('Länge des EKGs in sekunden:', ekg.legnth/1000)
+        ekg.plot_hr_series()
+        st.plotly_chart(ekg.hr_plot, use_container_width=True)
 except:
     st.write("Keine Daten vorhanden. Andere Person wählen!")
+
+    
     

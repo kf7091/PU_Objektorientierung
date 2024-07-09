@@ -12,6 +12,7 @@ class EKGdata:
         self.date = datetime.strptime(ekg_table.get(doc_id=ekg_id)["date"], "%Y-%m-%d")
         self.data_link = ekg_table.get(doc_id=ekg_id)["result_link"]
         self.df = pd.read_csv(self.data_link, sep='\t', header=None, names=['EKG in mV','Time in ms',])
+        self.legnth = self.df['Time in ms'].iloc[-1]-self.df['Time in ms'].iloc[0]
 
     
     def find_peaks(self, threshold:float, respacing_factor:int=5) -> list:
@@ -71,20 +72,71 @@ class EKGdata:
             return self.hr_pds
 
         
-    def plot_time_series(self) -> go.Figure: #needs to be reworked
+    def plot_hr_series(self, accuracy:int=25) -> go.Figure:
         '''
-        Plot the EKG data with the peaks found
+        Plot the Heartrate data with the peaks found
         ### Parameters
         - Args:
+            - accuracy (`int`): The accuracy of the rolling mean
         - Returns:
             - self.time_series (`plotly.graph_objects.Figure`): A plotly figure with the EKG data
         '''
-        # create a plotly figure with the raw EKG data and time in seconds
-        self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"]/1000, y=self.df["EKG in mV"]))
-        # create a scatter plot with the R-peaks and add it to the figure
-        r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks]/1000, y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
-        self.time_series.add_trace(r_peaks)
-        return self.time_series
+
+        # check if self.hr_pds exists
+        if not hasattr(self, 'hr_pds'):
+            raise ValueError("No heart rate data found - please run estimate_hr() first")
+        else:
+            self.hr_plot = go.Figure()
+
+            # create a scatter plot with the heartrate values
+            self.hr_plot.add_trace(go.Scatter(
+                name="Herzfrequenz",
+                x=self.hr_pds.index/1000,
+                y=self.hr_pds,
+                mode='markers',
+                visible='legendonly'
+            ))
+            
+            # create a line plot with the rolling mean of the heartrate values
+            avg_hr_pds = self.hr_pds.rolling(window=accuracy, min_periods=1).mean()
+            self.hr_plot.add_trace(go.Scatter(
+                name="Durchschnittliche Herzfrequenz",
+                x=avg_hr_pds.index/1000,
+                y=avg_hr_pds,
+                mode='lines',
+                line_shape='spline'
+            ))
+
+            # update the layout of the plot
+            self.hr_plot.update_layout(
+                title="Herzfrequenz",
+                xaxis_title="Zeit in s",
+                yaxis_title="Herzfrequenz in bpm",
+                xaxis=dict(
+                    rangeslider=dict(
+                    visible=True
+                    ),
+                    type="linear"
+                )
+            )
+            # move the legend to the top
+            self.hr_plot.update_legends(
+                orientation="h",
+                y=1,
+                x=0.5,
+                xanchor="center",
+                yanchor="bottom"
+            )
+
+            return self.hr_plot
+
+            #old code
+            '''# create a plotly figure with the raw EKG data and time in seconds
+            self.time_series = go.Figure(data=go.Scatter(x=self.df["Time in ms"]/1000, y=self.df["EKG in mV"]))
+            # create a scatter plot with the R-peaks and add it to the figure
+            r_peaks = go.Scatter(x=self.df["Time in ms"].iloc[self.peaks]/1000, y=self.df["EKG in mV"].iloc[self.peaks], mode='markers', marker=dict(color='red', size=8))
+            self.time_series.add_trace(r_peaks)
+            return self.time_series'''
     
 
     '''
