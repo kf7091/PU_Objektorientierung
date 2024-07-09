@@ -86,7 +86,6 @@ class EKGdata:
         self.time_series.add_trace(r_peaks)
         return self.time_series
     
-    #def
 
     '''
     @staticmethod
