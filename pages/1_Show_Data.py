@@ -5,6 +5,11 @@ from ekgdata import EKGdata
 import plotly.graph_objects as go
 from tinydb import TinyDB
 
+st.set_page_config(page_title="Person- and EKG-Data", page_icon="📈")
+
+st.markdown("# Person- and EKG-Data")
+st.sidebar.header("Person- and EKG-Data")
+
 person_data = Person.load_person_data()
 db = TinyDB("data/person_db.json")
 person_names_list = Person.get_persons_list(db.table("persons"))
