@@ -9,7 +9,7 @@
 
 ## Verwendung mit share.streamlit
 - Über diesen Link ist eine Verwendung ohne Download des Repos möglich:
-- [Hier geht's zur App](https://puobjektorientierung-ag2xywqczz7qcwhqsb3xvz-main.streamlit.app/)
+- [Hier geht's zur App](https://progueb2hopfkoch.streamlit.app/)
 
 ## Verwendung
 
