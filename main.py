@@ -14,7 +14,7 @@ person_names_list = Person.get_persons_list(db.table("persons"))
 if 'current_user' not in st.session_state:
     st.session_state.current_user = 'None'
     st.session_state.selected_person = 'None'
-    st.session_state.selected_ekg = 'None'
+    st.session_state.selected_ekg = 'None' 
 
 st.write("# EKG APP") # Eine Überschrift der ersten Ebene
 st.write("### Versuchsperson auswählen") # Eine Überschrift der zweiten Ebene
