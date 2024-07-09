@@ -7,5 +7,5 @@ st.set_page_config(
 
 # st.sidebar.header("Startseite und Login")
 
-st.write("# Hallo zu unserer App! Bitte loggen Sie sich ein.")
+st.write("## Hallo bei unserer App! Bitte loggen Sie sich ein.")
 
