@@ -12,7 +12,7 @@ person_data = Person.load_person_data()
 person_names_list = Person.get_persons_list(person_data)
 
 # Auswahl der zu bearbeitenden Person
-st.write("## Personendaten bearbeiten")
+st.title("Personendaten bearbeiten")
 selected_person = st.selectbox(
     "Wählen Sie eine Person zum Bearbeiten aus",
     options=person_names_list,

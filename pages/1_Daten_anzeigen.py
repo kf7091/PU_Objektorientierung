@@ -12,8 +12,7 @@ if 'logged_in' not in st.session_state or not st.session_state.logged_in:
     st.warning("Bitte loggen Sie sich zuerst auf der Startseite ein oder erstellen Sie einen neuen Benutzer!")
     st.stop()
 
-st.markdown("<h1 style='text-align: black;'>Personen- und EKG-Daten</h1>", unsafe_allow_html=True)
-
+st.title("Personen- und EKG-Daten")
 
 person_data = Person.load_person_data()
 db = TinyDB("data/person_db.json")

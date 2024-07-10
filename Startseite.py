@@ -45,7 +45,7 @@ if 'logged_in' not in st.session_state:
     st.session_state.username = ""
 
 # Start der Startseite und Überschrift
-st.markdown("<h1 style='text-align: center;'>Schauen Sie Ihre EKD-Daten an!</h1>", unsafe_allow_html=True)
+st.title("Schauen Sie Ihre EKD-Daten an!")
 # Bild und Text nebeneinander anzeigen
 #st.columns([10,1,10,20])
 #col1,col2 = st.columns([2,2])

@@ -27,3 +27,4 @@ if st.button("Person hinzufügen"):
     else:
         st.error("Bitte geben Sie einen Vornamen, Nachnamen und das Geburtsjahr ein!")
 
+uploaded_picture = st.file_uploader("Bild hochladen", type=["png", "jpg", "jpeg"], accept_multiple_files=False, key="uploaded_picture")
