@@ -47,19 +47,19 @@ if 'logged_in' not in st.session_state:
 # Start der Startseite und Überschrift
 st.markdown("<h1 style='text-align: center;'>Schauen Sie Ihre EKD-Daten an!</h1>", unsafe_allow_html=True)
 # Bild und Text nebeneinander anzeigen
-st.columns([10,1,10,20])
-col1,col2 = st.columns([2,2])
+#st.columns([10,1,10,20])
+#col1,col2 = st.columns([2,2])
 
-with col1:
-    try:
-        logo = Image.open('data/pictures/Logo.png')
-        st.image(logo, caption='', width=logo.width // 1)
-    except Exception as e:
-        st.error(f"Logo konnte nicht geladen werden: {e}")
-with col2:
-    st.write("Willkommen zur EKG-Datenanalyse-App!")
-    st.write("Um Ihre Daten analysieren zu können müssen Sie sich einloggen.")
-    st.write("Falls Sie noch keinen Account haben, registrieren Sie sich bitte.")
+#with col1:
+#    try:
+#        logo = Image.open('data/pictures/Logo.png')
+#        st.image(logo, caption='', width=logo.width // 1)
+#    except Exception as e:
+#        st.error(f"Logo konnte nicht geladen werden: {e}")
+#with col2:
+st.write("Willkommen zur EKG-Datenanalyse-App!")
+st.write("Um Ihre Daten analysieren zu können müssen Sie sich einloggen.")
+st.write("Falls Sie noch keinen Account haben, registrieren Sie sich bitte.")
 
 # Login und Registrierungsformular nebeneinander anzeigen
 col1,col2 = st.columns(2)

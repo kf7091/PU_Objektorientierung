@@ -20,6 +20,10 @@ if st.button("Person hinzufügen"):
     if firstname and lastname and year_of_birth and picture_path:
         Person.add_person(firstname, lastname, year_of_birth, picture_path)
         st.success(f"Person {firstname} {lastname} hinzugefügt")
+    elif firstname and lastname and year_of_birth:
+        picture_path = "data/pictures/empty.png"
+        Person.add_person(firstname, lastname, year_of_birth, picture_path)
+        st.success(f"Person {firstname} {lastname} hinzugefügt")
     else:
-        st.error("Es müssen alle Felder ausgefüllt sein!")
+        st.error("Bitte geben Sie einen Vornamen, Nachnamen und das Geburtsjahr ein!")
 
