@@ -2,6 +2,50 @@ import streamlit as st
 from PIL import Image
 import json
 
+
+import hmac
+import streamlit as st
+
+
+def check_password():
+    """Returns `True` if the user had a correct password."""
+
+    def login_form():
+        """Form with widgets to collect user information"""
+        with st.form("Credentials"):
+            st.text_input("Username", key="username")
+            st.text_input("Password", type="password", key="password")
+            st.form_submit_button("Log in", on_click=password_entered)
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if st.session_state["username"] in st.secrets[
+            "passwords"
+        ] and hmac.compare_digest(
+            st.session_state["password"],
+            st.secrets.passwords[st.session_state["username"]],
+        ):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the username or password.
+            del st.session_state["username"]
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the username + password is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show inputs for username + password.
+    login_form()
+    if "password_correct" in st.session_state:
+        st.error("😕 User not known or password incorrect")
+    return False
+
+
+if not check_password():
+    st.stop()
+
+'''
 st.set_page_config(
     page_title="Hello",
     page_icon="👋",
@@ -61,20 +105,9 @@ with col2:
     st.write("Falls Sie noch keinen Account haben, registrieren Sie sich bitte.")
 
 # Login und Registrierungsformular nebeneinander anzeigen
-col1,col2 = st.columns(2)
+tab1, tab2 = st.tabs(["Login", "Registrieren"])
 
-with col1: # Registrierung
-    if not st.session_state.logged_in:
-        st.title("Registrieren")
-        reg_username = st.text_input("Neuer Benutzername")
-        reg_password = st.text_input("Neues Passwort", type="password")
-        
-        if st.button("Registrieren"):
-            if register(reg_username, reg_password):
-                st.success("Sie sind nun registriert! Bitte loggen Sie sich ein")
-            else:
-                st.error("Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.")
-with col2: # Login
+with tab1: # Login
     if not st.session_state.logged_in:
         st.title("Login")
         username = st.text_input("Benutzername")
@@ -87,15 +120,23 @@ with col2: # Login
                 st.success("Erfolgreich eingeloggt!")
                 st.experimental_rerun()  # Neuladen der Anwendung für sichtbare Änderungen
             else:
-                st.error("Ungültige Anmeldeinformationen")           
-    
-
+                st.error("Ungültige Anmeldeinformationen")    
+with tab2: # Registrierung
+    if not st.session_state.logged_in:
+        st.title("Registrieren")
+        reg_username = st.text_input("Neuer Benutzername")
+        reg_password = st.text_input("Neues Passwort", type="password")
+        
+        if st.button("Registrieren"):
+            if register(reg_username, reg_password):
+                st.success("Sie sind nun registriert! Bitte loggen Sie sich ein")
+            else:
+                st.error("Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.")
+       
 # Inhalt anzeigen nach erfolgreichen Login
-left,col1 = st.columns([0.5,2])
-
-with col1:
-    if st.session_state.logged_in:
-        st.header(f"Willkommen {st.session_state.username}!")
-        st.write("Sie haben nun Zugriff auf die App. Wählen Sie eine Option links im Menü aus.")
-    else:
-        st.stop()  # Stoppt die weitere Ausführung der Seite, wenn nicht eingeloggt
+if st.session_state.logged_in:
+    st.header(f"Willkommen {st.session_state.username}!")
+    st.write("Sie haben nun Zugriff auf die App. Wählen Sie eine Option links im Menü aus.")
+else:
+    st.stop()  # Stoppt die weitere Ausführung der Seite, wenn nicht eingeloggt
+'''

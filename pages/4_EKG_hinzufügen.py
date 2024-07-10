@@ -3,6 +3,7 @@ from person import Person
 from PIL import Image
 from tinydb import TinyDB
 from person import Person
+from ekgdata import EKGdata
 import os
 import uuid
 
