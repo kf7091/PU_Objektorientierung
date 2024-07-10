@@ -58,30 +58,30 @@ with tab3:
     if 'current_user' not in st.session_state:
         st.session_state.selected_person = 'None'
 
-    st.session_state.selected_person = st.selectbox(
-        'Versuchsperson',
-        options = person_names_list, key="sbVersuchsperson")
+    left, col1, right, col2 = st.columns([1,10,1,30])
+    with col2:
+        st.session_state.selected_person = st.selectbox(
+            'Versuchsperson',
+            options = person_names_list, key="sbVersuchsperson")
 
-    person_id = Person.find_person_id_by_name(st.session_state.selected_person)
-    path = os.path.join("data", "person_pictures", '{}.jpg'.format(person_id))
+        person_id = Person.find_person_id_by_name(st.session_state.selected_person)
+        path = os.path.join("data", "person_pictures", '{}.jpg'.format(person_id))
     
-    #uploaded_picture = st.file_uploader("Bild hochladen", type=["png", "jpg", "jpeg"], accept_multiple_files=False, key="uploaded_picture")
-    uploaded_picture = st.file_uploader("Bild hochladen", type="jpg", accept_multiple_files=False, key="uploaded_picture")
-    if st.button("Bild hochladen"):
-        if uploaded_picture is not None:
-            #path = os.path.join("data", "person_pictures", '{}.jpg'.format(person_id))
-            
-            image = Image.open(uploaded_picture)
-            image.save(path)
-            st.success("Bild erfolgreich hochgeladen!")
-    if st.button("Bild löschen"):
-        path = path
-        os.remove(path)
-        st.success("Bild erfolgreich gelöscht!")
-
-    try:
-        image = Image.open(path)
-        st.image(image, width=140)
-    except:
-        image = Image.open("data" + os.sep + "person_pictures" + os.sep + "empty.png")
-        st.image("data" + os.sep + "person_pictures" + os.sep + "empty.png", width=140)
+        uploaded_picture = st.file_uploader("Bild hochladen", type="jpg", accept_multiple_files=False, key="uploaded_picture")
+        if st.button("Bild hochladen"):
+            if uploaded_picture is not None:
+                image = Image.open(uploaded_picture)
+                image.save(path)
+                st.success("Bild erfolgreich hochgeladen!")
+        
+    with col1:
+        try:
+            image = Image.open(path)
+            st.image(image, width=140)
+        except:
+            image = Image.open("data" + os.sep + "person_pictures" + os.sep + "empty.png")
+            st.image("data" + os.sep + "person_pictures" + os.sep + "empty.png", width=140)
+        if st.button("Bild löschen"):
+            path = path
+            os.remove(path)
+            st.success("Bild erfolgreich gelöscht!")
