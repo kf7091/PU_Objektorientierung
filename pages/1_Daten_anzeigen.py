@@ -7,7 +7,7 @@ from tinydb import TinyDB
 
 st.set_page_config(page_title="Personen- and EKG-Daten", page_icon="📈")
 
-st.markdown("<h1 style='text-align: center; color: black;'>Personen- und EKG-Daten</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: black;'>Personen- und EKG-Daten</h1>", unsafe_allow_html=True)
 st.sidebar.header("Personen- and EKG-Daten")
 
 person_data = Person.load_person_data()
