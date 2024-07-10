@@ -52,7 +52,7 @@ col1,col2 = st.columns([2,2])
 
 with col1:
     try:
-        logo = Image.open('Data/pictures/Logo.png')
+        logo = Image.open('data/pictures/Logo.png')
         st.image(logo, caption='', width=logo.width // 1)
     except Exception as e:
         st.error(f"Logo konnte nicht geladen werden: {e}")
