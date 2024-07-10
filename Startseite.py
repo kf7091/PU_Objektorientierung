@@ -46,25 +46,35 @@ if 'logged_in' not in st.session_state:
 
 # Start der Startseite und Überschrift
 st.title("Schauen Sie Ihre EKD-Daten an!")
-# Bild und Text nebeneinander anzeigen
-#st.columns([10,1,10,20])
-#col1,col2 = st.columns([2,2])
 
-#with col1:
-#    try:
-#        logo = Image.open('data/pictures/Logo.png')
-#        st.image(logo, caption='', width=logo.width // 1)
-#    except Exception as e:
-#        st.error(f"Logo konnte nicht geladen werden: {e}")
-#with col2:
-st.write("Willkommen zur EKG-Datenanalyse-App!")
-st.write("Um Ihre Daten analysieren zu können müssen Sie sich einloggen.")
-st.write("Falls Sie noch keinen Account haben, registrieren Sie sich bitte.")
+st.columns([10,1,10,20])
+col1,col2 = st.columns([2,2])
+with col1:
+    try:
+        logo = Image.open('data/pictures/Logo.jpg')
+        st.image(logo, caption='', width=logo.width // 3)
+    except Exception as e:
+        st.error(f"Logo konnte nicht geladen werden: {e}")
+with col2:
+    st.write("Willkommen zur EKG-Datenanalyse-App!")
+    st.write("Um Ihre Daten analysieren zu können müssen Sie sich einloggen.")
+    st.write("Falls Sie noch keinen Account haben, registrieren Sie sich bitte.")
 
 # Login und Registrierungsformular nebeneinander anzeigen
 col1,col2 = st.columns(2)
 
-with col1:
+with col1: # Registrierung
+    if not st.session_state.logged_in:
+        st.title("Registrieren")
+        reg_username = st.text_input("Neuer Benutzername")
+        reg_password = st.text_input("Neues Passwort", type="password")
+        
+        if st.button("Registrieren"):
+            if register(reg_username, reg_password):
+                st.success("Sie sind nun registriert! Bitte loggen Sie sich ein")
+            else:
+                st.error("Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.")
+with col2: # Login
     if not st.session_state.logged_in:
         st.title("Login")
         username = st.text_input("Benutzername")
@@ -77,19 +87,8 @@ with col1:
                 st.success("Erfolgreich eingeloggt!")
                 st.experimental_rerun()  # Neuladen der Anwendung für sichtbare Änderungen
             else:
-                st.error("Ungültige Anmeldeinformationen")
-with col2:       
-    # Registrierungsformular
-    if not st.session_state.logged_in:
-        st.title("Registrieren")
-        reg_username = st.text_input("Neuer Benutzername")
-        reg_password = st.text_input("Neues Passwort", type="password")
-        
-        if st.button("Registrieren"):
-            if register(reg_username, reg_password):
-                st.success("Sie sind nun registriert! Bitte loggen Sie sich ein")
-            else:
-                st.error("Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen Benutzernamen.")
+                st.error("Ungültige Anmeldeinformationen")           
+    
 
 # Inhalt anzeigen nach erfolgreichen Login
 left,col1 = st.columns([0.5,2])
