@@ -1,6 +1,7 @@
 .venv
 .vscode
 .devcontainer
+.streamlit
 __pycache__
 test.py
 ~$*
