@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 # Benutzerdaten aus einer JSON Datei laden
-def load_users(file_path='Data/users.json'):
+def load_users(file_path='data/users.json'):
     try:
         with open(file_path, 'r') as file:
             return json.load(file)
@@ -16,7 +16,7 @@ def load_users(file_path='Data/users.json'):
         return {}
 
 # Benutzerdaten in eine JSON Datei speichern
-def save_users(users, file_path='Data/users.json'):
+def save_users(users, file_path='data/users.json'):
     with open(file_path, 'w') as file:
         json.dump(users, file)
 
