@@ -50,7 +50,7 @@ with tab2:
 
         if st.button("Personendaten aktualisieren"):
             # Aktualisieren der Personendaten
-            Person.update_person(person_id, firstname, lastname, year_of_birth, picture_path)
+            Person.update_person(person_id, firstname, lastname, year_of_birth)
             st.success(f"Personendaten für {firstname} {lastname} wurden aktualisiert.")
 with tab3:
     st.title("Bild hochladen")
