@@ -124,6 +124,19 @@ class Person:
         max_hr_bpm =  223 - 0.9 * age
         return int(max_hr_bpm)
     
+    @staticmethod
+    def add_person(firstname: str, lastname: str, year_of_birth: int, picture_path: str):
+        db = TinyDB("data/person_db.json")
+        person_table = db.table("persons")
+        next_id = str(len(person_table) + 1)
+        person_table.insert({
+            "id": next_id,
+            "year_of_birth": year_of_birth,
+            "firstname": firstname,
+            "lastname": lastname,
+            "picture_path": picture_path
+        })    
+
     """
     # not functional or used
     @staticmethod 
