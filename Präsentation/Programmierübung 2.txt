@@ -9,10 +9,8 @@ Programmierübung 2:
 - tiny db
 	- Bei Daten Dauer des EKGs anzeigen
 - Nutzer / Testdaten editieren / hinzufügen
-	- geschlechterabhängig
-		- Herzratenberechnung
+	- Herzratenberechnung
 - Maximalpulsüberschreitung Wahrnung ausgeben
-- Herzratenvariabilität
 	- Ein Tab bei dem man alle Daten sieht
 - (Daten bereinigen)
 - User Interface verschönern und neu machen
@@ -21,8 +19,6 @@ Programmierübung 2:
 	- /Personen / EKG-Daten über UI hochladen 
 		- Drag and Drop
 		- in ein Pandas DataFrame wenn möglich
-	- hell / dunkel Modus (Theme ändern)
-	- User und Grafiken nebeinander anzeigen
 	- Über Collums Daten nebeinander anzeige
 		- Wenn Screen kleiner wird sind Daten untereinander
 - Herzraten Diagramm im Durchschnittdarstellen
