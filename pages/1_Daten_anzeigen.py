@@ -57,7 +57,7 @@ st.write("Ausgewähltes EKG: ", st.session_state.current_user, "von:", current_p
 
 try:
     ekg = EKGdata(st.session_state.current_user)
-    ekg.find_peaks(340, 4)
+    ekg.find_peaks(threshold=340, respacing_factor=4)
     hr = ekg.estimate_hr()
 except:
     st.write("Keine Daten vorhanden. Andere Person wählen!")
