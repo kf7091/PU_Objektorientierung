@@ -17,7 +17,7 @@
     - Dazu Git Bash öffnen und zum gewünschten Ordner navigieren
     - Führen sie folgende Befehl aus: `git clone <Link des Repositorys>` 
 - (optional) aktivieren Sie Ihr Virtual Environment
-- führen Sie den Befehl `streamlit run main.py` aus
+- führen Sie den Befehl `streamlit run Startseite.py` aus
 - die Anwendung sollte sich in Ihrem Browser öffnen
 - Sie können nun die gewünschte Person auswählen
 - die Anwendung zeigt Ihnen die Daten der gewählten Person an und können ausgewählt werden
