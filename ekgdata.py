@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 from tinydb import TinyDB
 from tinydb.table import Table, Document
+import os
 
 class EKGdata:
 
@@ -182,7 +183,13 @@ class EKGdata:
         '''
         return TinyDB("data/person_db.json").table("ekg_tests")
 
-
+    @staticmethod
+    def delete_ekg_file(ekg_id: int):
+        """Deletes the EKG file associated with a given ekg_id."""
+        ekg_table = EKGdata.load_ekg_table()
+        ekg_data = ekg_table.get(doc_id=ekg_id)
+        file_path = ekg_data["result_link"]
+        os.remove(file_path)
 
 if __name__ == "__main__":
     

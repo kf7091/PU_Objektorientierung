@@ -1,6 +1,7 @@
 import datetime
 from tinydb import TinyDB, Query
 from tinydb.table import Table, Document
+from ekgdata import EKGdata
 
 class Person:
     
@@ -148,6 +149,21 @@ class Person:
             "picture_path": picture_path
         }, doc_ids=[person_id]
         )
+
+    @staticmethod
+    def delete_ekg_tests_by_person_id(person_id: int):
+        """Deletes all EKG tests associated with a given person_id."""
+        ekg_table = EKGdata.load_ekg_table()
+        EKGQuery = Query()
+        ekg_table.remove(EKGQuery.person_id == person_id)
+
+    @staticmethod
+    def delete_person(person_id: int):
+        """Deletes a person and their related EKG tests from the database."""
+        person_table = Person.load_person_data()
+        person_table.remove(doc_ids=[person_id])
+        Person.delete_ekg_tests_by_person_id(person_id)
+            
 
     """
     # not functional or used
