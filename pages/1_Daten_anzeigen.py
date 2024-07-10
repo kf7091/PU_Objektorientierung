@@ -58,6 +58,7 @@ try:
     ekg = EKGdata(st.session_state.current_user)
     ekg.find_peaks(threshold=340, respacing_factor=4)
     hr = ekg.estimate_hr()
+    hr_warning = ekg.max_hr_warning(current_person_obj.max_hr_bpm)
 except:
     st.write("Keine Daten vorhanden. Andere Person wählen!")
 
@@ -70,11 +71,19 @@ tab1, tab2 = st.tabs(["Daten", "Grafik"])
 
 try:
     with tab1:
+        if ekg.hr_warning:
+            st.warning("Die maximale Herzfrequenz wurde zu lange überschritten!")
+        if not ekg.ekg_valid():
+            st.error("EKG Daten sind ungültig!")
         st.write("Daten des EKGs: {}".format(st.session_state.current_user))
         st.write('Datum:', ekg.date)
         st.write("Durchschnittliche Herzfrequenz: ", int(hr.mean()))
 
     with tab2:
+        if ekg.hr_warning:
+            st.warning("Die maximale Herzfrequenz wurde zu lange überschritten!")
+        if not ekg.ekg_valid():
+            st.error("EKG Daten sind ungültig!")
         st.write('Länge des EKGs in sekunden:', ekg.legnth/1000)
         ekg.plot_hr_series()
         st.plotly_chart(ekg.hr_plot, use_container_width=True)
