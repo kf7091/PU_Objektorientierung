@@ -2,6 +2,7 @@ import datetime
 from tinydb import TinyDB, Query
 from tinydb.table import Table, Document
 from ekgdata import EKGdata
+import os
 
 class Person:
     
@@ -126,7 +127,7 @@ class Person:
         return int(max_hr_bpm)
     
     @staticmethod
-    def add_person(firstname: str, lastname: str, year_of_birth: int, picture_path: str):
+    def add_person(firstname: str, lastname: str, year_of_birth: int):
         db = TinyDB("data/person_db.json")
         person_table = db.table("persons")
         next_id = str(len(person_table) + 1)
@@ -135,18 +136,16 @@ class Person:
             "year_of_birth": year_of_birth,
             "firstname": firstname,
             "lastname": lastname,
-            "picture_path": picture_path
         })    
 
     @staticmethod
-    def person_updaten(person_id:int, firstname:str, lastname:str, year_of_birth:int, picture_path:str):
+    def person_updaten(person_id:int, firstname:str, lastname:str, year_of_birth:int):
         db = TinyDB("data/person_db.json")
         person_table = db.table("persons")
         person_table.update({
             "year_of_birth": year_of_birth,
             "firstname": firstname,
             "lastname": lastname,
-            "picture_path": picture_path
         }, doc_ids=[person_id]
         )
 
@@ -193,7 +192,10 @@ class Person:
         self.year_of_birth = person_table["year_of_birth"]
         self.firstname = person_table["firstname"]
         self.lastname = person_table["lastname"]
-        self.picture_path = person_table["picture_path"]
+        if os.path.isfile("data/person_pictures/{}.jpg".format(person_id)):
+            self.picture_path = "data/person_pictures/{}.jpg".format(person_id)
+        else:
+            self.picture_path = "data/person_pictures/empty.png"
         self.id = person_table.doc_id
         self.age = self.calc_age(self.year_of_birth)
         self.max_hr_bpm = self.calc_max_hr(self.age)
