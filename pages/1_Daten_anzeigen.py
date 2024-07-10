@@ -5,10 +5,10 @@ from ekgdata import EKGdata
 import plotly.graph_objects as go
 from tinydb import TinyDB
 
-st.set_page_config(page_title="Person- and EKG-Data", page_icon="📈")
+st.set_page_config(page_title="Personen- and EKG-Daten", page_icon="📈")
 
-st.markdown("# Person- and EKG-Data")
-st.sidebar.header("Person- and EKG-Data")
+st.markdown("<h1 style='text-align: center; color: black;'>Personen- und EKG-Daten</h1>", unsafe_allow_html=True)
+st.sidebar.header("Personen- and EKG-Daten")
 
 person_data = Person.load_person_data()
 db = TinyDB("data/person_db.json")
@@ -21,7 +21,6 @@ if 'current_user' not in st.session_state:
     st.session_state.selected_person = 'None'
     st.session_state.selected_ekg = 'None' 
 
-st.write("# EKG APP") # Eine Überschrift der ersten Ebene
 st.write("### Versuchsperson auswählen") # Eine Überschrift der zweiten Ebene
 
 st.session_state.selected_person = st.selectbox(
