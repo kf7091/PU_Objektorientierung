@@ -137,6 +137,18 @@ class Person:
             "picture_path": picture_path
         })    
 
+    @staticmethod
+    def person_updaten(person_id:int, firstname:str, lastname:str, year_of_birth:int, picture_path:str):
+        db = TinyDB("data/person_db.json")
+        person_table = db.table("persons")
+        person_table.update({
+            "year_of_birth": year_of_birth,
+            "firstname": firstname,
+            "lastname": lastname,
+            "picture_path": picture_path
+        }, doc_ids=[person_id]
+        )
+
     """
     # not functional or used
     @staticmethod 
