@@ -192,13 +192,26 @@ class EKGdata:
         os.remove(file_path)
 
 
-    def max_hr_warning(self, max_hr:int, timeframe:int=10) -> bool:
+    def ekg_valid(self) -> bool:
+        '''
+        A function to check if the EKG data is valid
+        ### Parameters
+        - Args:
+        - Returns:
+            - bool: True if the EKG data is valid
+        '''
+        for hr in self.hr_pds:
+            if hr < 30 or hr > 200:
+                return False
+        return True
+        
+    def max_hr_warning(self, max_hr:int, timeframe:int=10*1000) -> bool:
         '''
         A function to check if the max_hr is exceeded
         ### Parameters
         - Args:
             - max_hr (`int`): The maximum heart rate
-            - timeframe (`int`): The timeframe in seconds
+            - timeframe (`int`): The timeframe in ms
         - Returns:
             - bool: True if the max_hr is exceeded in the timeframe
         '''
@@ -214,10 +227,12 @@ class EKGdata:
 
             index_old = index
 
-            if hr_timer > timeframe*1000:
-                return True
+            if hr_timer > timeframe:
+                self.hr_warning = True
+                return self.hr_warning
             
-        return False
+        self.hr_warning = False
+        return self.hr_warning
 
 
 if __name__ == "__main__":
@@ -225,11 +240,11 @@ if __name__ == "__main__":
     print("This is a module with some functions to read the EKG data")
 
     print('create EKGdata object')
-    ekg = EKGdata(3)
+    ekg = EKGdata(4)
     ekg.find_peaks(340, 4)
     ekg.estimate_hr()
 
     print('plot')
     fig_hr = go.Figure(data=go.Scatter(x=ekg.hr_pds.index, y=ekg.hr_pds))
     fig_hr.show()
-    print(EKGdata.max_hr_warning(100, ekg.hr_pds))
+    print(ekg.max_hr_warning(191))
